@@ -46,22 +46,22 @@ const RoundTwoPage = () => {
 				}
 			}
 
-			if (data.matches[2]?.status === "IN_PROGRESS")
-			{
-				for (const player of data.matches[2].players)
-				{
-					if (player.id === userId)
-						navigate(`/game?tournamentId=${data.id}&matchId=${data.matches[2].id}`)
-					else
-						setPlayer2(player)
-				}
+			const status: string | undefined = data.matches[2]?.status
+			if (status === "PENDING") {
+				setPlayer1(data.matches[2]?.players[0])
+				setPlayer2(data.matches[2]?.players[1])
+				await new Promise((resolve) => setTimeout(resolve, 2000))
+				navigate(`/game?tournamentId=${data.id}&matchId=${data.matches[2].id}`)
+			}
+			else if (status === "COMPLETED") {
+				alert("이미 종료된 매치입ㄴ디ㅏ.")
+				navigate("/lobby")
 			}
 		} catch (error) {
 			if (error instanceof Error) {
 				alert(error.message)
 			}
 		}
-	}
 
 	useEffect(() => {
 		updateRoomInfo()

@@ -161,10 +161,20 @@ const MatchResult = ({ match, isMulti, tournamentId }: Props) => {
 		
 		const userId = localStorage.getItem("userId")
 		const player = match.players.find(p => p.id === Number(userId))
-		if (player) {
+		if (player)
 			setIsWinner(player.isWinner)
-		}
 	}, [match])
+
+	useEffect(() => {
+		handleMultiWin()
+	}, [isWinner])
+
+	async function handleMultiWin() {
+		if (isMulti && match?.round === 1 && isWinner) {
+			await new Promise((resolve) => setTimeout(resolve, 5000))
+			navigate(`/round2/${tournamentId}`, {replace:true})
+		}
+	}
 
 	const handleButton = () => {
 		if (!isMulti)
