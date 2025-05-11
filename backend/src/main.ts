@@ -95,14 +95,9 @@ await fastify.register(matchRoutes, { prefix: '/ft' });
 // CORS 설정 등록
 await fastify.register(cors, {
   origin: (origin, callback) => {
-    const allowedOrigins = [
-      'https://back-coffeego.com',
-      'http://localhost:8083',
-      'http://localhost:5173',
-      'http://localhost:5174',
-    ];
+    const allowedOrigins = process.env.CORS_URL?.split(" ");
 
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins?.includes(origin)) {
       // 허용된 출처
       callback(null, true);
     } else {

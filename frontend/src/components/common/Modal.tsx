@@ -1,4 +1,4 @@
-import ModalBackGround from '../../assets/modal.svg';
+import ModalBackGround from '/assets/modal.svg';
 
 type ModalProps = {
   isOpen: boolean;

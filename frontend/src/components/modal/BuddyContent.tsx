@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import AddBuddyIcon from '../../assets/icon/AddBuddy.svg';
+import AddBuddyIcon from '/assets/icon/AddBuddy.svg';
 import { BuddyListResponse, Buddy } from '../../types/Buddy';
 import fetchWithAuth from '../utils/fetchWithAuth';
-import Placeholder from '../../assets/black_profile.svg';
-import DeleteButton from '../../assets/button/delete_button.svg';
+import Placeholder from '/assets/black_profile.svg';
+import DeleteButton from '/assets/button/delete_button.svg';
 import DeleteModal from '../common/Modal';
 import Button from '../common/BasicButton';
 // import { mockBuddyList } from '../../mocks/buddies';

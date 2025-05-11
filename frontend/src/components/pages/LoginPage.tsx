@@ -2,8 +2,8 @@ import { GoogleOAuthProvider, TokenResponse, useGoogleLogin } from '@react-oauth
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackGroundImage from '../common/BackGroundImage'
-import Logo from '../../assets/logo.svg';
-import LoginButton from '../../assets/button/login_button.svg'
+import Logo from '/assets/logo.svg';
+import LoginButton from '/assets/button/login_button.svg'
 import IsLoggedIn from '../utils/IsLoggedIn';
 
 const LoginPage = () => {
@@ -15,7 +15,7 @@ const LoginPage = () => {
 
 	return (
 		<>
-			<BackGroundImage backgroundImageUrl='/src/assets/background/background_main.png'>
+			<BackGroundImage backgroundImageUrl='/assets/background/background_main.png'>
 				<div className="flex flex-col items-center justify-between h-full gap-[5vh]">
 					<img 
 					src={Logo}
@@ -35,16 +35,22 @@ const Login = () => {
 	const navigate = useNavigate()
 
 	const handleSuccess = (response: TokenResponse) => {
+		if (!response) {
+			alert("구글 로그인 오류.")
+			navigate("/")
+		}
 		fetch(`${import.meta.env.VITE_API_BASE}/ft/api/auth/login/google`, {
 			method: "POST",
 			headers: { "content-Type": "application/json" },
 			body: JSON.stringify({ googleAccessToken: response.access_token }),
 		})
-		.then((res) => res.json())
+		.then((res) => {
+			if (!res.ok) throw new Error()
+			return res.json()})
 		.then((data) => {
 			localStorage.setItem("userId", data.userId)
-			if (data.reauireTFA) {
-				navigate("/verify")
+			if (data.requireTFA) {
+				navigate("/authenticate")
 			}
 			else {
 				localStorage.setItem("accessToken", data.accessToken)

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import HeaderLogo from '../../assets/header_logo.svg';
-import InvitationIcon from '../../assets/icon/invitation.svg';
-import BuddyIcon from '../../assets/icon/buddy.svg';
-import MenuIcon from '../../assets/icon/menu.svg';
+import HeaderLogo from '/assets/header_logo.svg';
+import InvitationIcon from '/assets/icon/invitation.svg';
+import BuddyIcon from '/assets/icon/buddy.svg';
+import MenuIcon from '/assets/icon/menu.svg';
 import SideModal from '../modal/SideModal';
 import MypageContent from '../modal/MyPageContent';
 import BuddyContent from '../modal/BuddyContent';
@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 w-full flex items-center justify-between bg-black/70 h-24">
+    <header className="fixed top-0 w-full flex items-center justify-between bg-black/70 h-24 gap-[1vw]">
       <img
         src={HeaderLogo}
         alt="Header Logo"
@@ -28,6 +28,15 @@ const Header = () => {
         className="cursor-pointer w-80 ml-0"
       />
       <nav className="space-x-4 flex flex-row mr-3">
+        <button 
+          onClick={() => {
+            localStorage.clear()
+            alert("로그아웃 하였습니다.")
+            navigate("/")}}
+            className="w-10 mr-10 cursor-pointer text-white text-3xl"
+        >
+          LOG&nbsp;OUT
+        </button>
         <img
           src={InvitationIcon}
           onClick={() => setIsInvitationModal(true)}

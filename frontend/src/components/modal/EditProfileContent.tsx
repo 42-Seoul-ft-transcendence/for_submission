@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SettingIcon from '../../assets/icon/setting.svg';
+import SettingIcon from '/assets/icon/setting.svg';
 import BasicButton from '../common/BasicButton';
 import fetchWithAuth from '../utils/fetchWithAuth';
 
@@ -30,7 +30,7 @@ function EditProfileContent({ onSaveSuccess, initial2FAEnabled }: EditProfileCon
   };
 
   const handle2FAToggle = async () => {
-    if (!is2FAEnabled) {
+    if (is2FAEnabled) {
       // ✅ 2FA 비활성화: API 호출
       try {
         const res = await fetchWithAuth(
@@ -155,7 +155,7 @@ function EditProfileContent({ onSaveSuccess, initial2FAEnabled }: EditProfileCon
       </div>
 
       {/* Save */}
-      <BasicButton className="absolute bottom-12 w-[300px] h-[60px]" onClick={handleSave}>
+      <BasicButton className="bottom-12 w-[300px] h-[60px]" onClick={handleSave}>
         Save
       </BasicButton>
     </div>

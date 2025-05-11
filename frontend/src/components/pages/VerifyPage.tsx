@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import BackGroundImage from '../common/BackGroundImage';
 import { useState, useRef } from 'react';
 import BasicButton from '../common/BasicButton';
+import fetchWithAuth from '../utils/fetchWithAuth'
 
 const VerifyPage = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const VerifyPage = () => {
 
   return (
     <>
-      <BackGroundImage backgroundImageUrl="src/assets/background/background_main.png">
+      <BackGroundImage backgroundImageUrl="/assets/background/background_main.png">
         <div className="flex justify-center gap-5 mb-4">
           {Array.from({ length }).map((_, i) => (
             <input
@@ -70,30 +71,25 @@ const VerifyPage = () => {
 };
 
 const verifyOTP = (otpCode: string, navigate: ReturnType<typeof useNavigate>) => {
-  const accessToken = localStorage.getItem('accessToken');
-  if (!accessToken) {
-    alert('로그인이 필요합니다.');
-    navigate('/');
-  }
   const secret = localStorage.getItem('secret');
   if (!secret) {
     alert('비정상적인 접근입니다.');
     navigate('/lobby');
   }
 
-  fetch(`${import.meta.env.VITE_API_BASE}/ft/api/auth/2fa/verify`, {
+  fetchWithAuth(`${import.meta.env.VITE_API_BASE}/ft/api/auth/2fa/verify`, navigate, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token: otpCode, secret }),
   })
-    .then((res) => {
-      localStorage.removeItem('secret');
-      if (!res.ok) throw new Error('HTTP 오류');
+  .then((res) => {
+    localStorage.removeItem('secret');
+    if (!res.ok) throw new Error('HTTP 오류');
       alert('2FA 등록 완료');
-    })
-    .catch(() => {
-      alert('OTP 인증 오류');
-    });
+  })
+  .catch(() => {
+    alert('OTP 인증 오류');
+  });
   navigate('/lobby');
 };
 

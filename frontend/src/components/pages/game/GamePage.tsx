@@ -6,7 +6,7 @@ import GameBoard, { PaddleControl } from './GameBoard'
 import UserProfile from './UserProfile'
 import BasicButton from '../../common/BasicButton'
 import fetchWithAuth from '../../utils/fetchWithAuth'
-import BlackProfile from '../../../assets/black_profile.svg'
+import BlackProfile from '/assets/black_profile.svg'
 import Modal from '../../common/Modal'
 import { match, wsGameInfo } from '../../../types/Tournament'
 
@@ -82,13 +82,13 @@ const GamePage = () => {
 		if (!match || match.status === "COMPLETED" || !matchId) return
 
 		const str = `${import.meta.env.VITE_API_BASE}`
-		const api_base = str.replace("http://", "")
+		const api_base = str.replace("https://", "")
 
 		const delayMs = 1000
 
 
 		const timeoutId = setTimeout(() => {
-			const ws = new WebSocket(`ws://${api_base}/ft/ws/match/${matchId}`)
+			const ws = new WebSocket(`wss://${api_base}/ft/ws/match/${matchId}`)
 			socketRef.current = ws
 
 			const accessToken = localStorage.getItem("accessToken")
@@ -136,7 +136,7 @@ const GamePage = () => {
 
 	return (
 		<>
-			<BackGroundImage backgroundImageUrl='/src/assets/background/background_basic.png'>
+			<BackGroundImage backgroundImageUrl='/assets/background/background_basic.png'>
 				<Modal isOpen={!isStarted && match?.status !== "COMPLETED"} onClose={() => {}} className="w-[360px] h-[210px] text-3xl">{waiting}</Modal>
 				{match?.status === "COMPLETED" ? <MatchResult match={match} isMulti={isMulti} tournamentId={tournamentId}/> : (
 					<div className="relative flex flex-col w-full">

@@ -2,10 +2,10 @@ import { useState } from 'react';
 import Modal from '../../common/Modal';
 import { useNavigate } from 'react-router-dom';
 import fetchWithAuth from '../../utils/fetchWithAuth'
-import Button2pDefault from '../../../assets/button/2p_yellow.svg';
-import Button4pDefault from '../../../assets/button/4p_yellow.svg';
-import Button2pActive from '../../../assets/button/2p_orange.svg';
-import Button4pActive from '../../../assets/button/4p_orange.svg';
+import Button2pDefault from '/assets/button/2p_yellow.svg';
+import Button4pDefault from '/assets/button/4p_yellow.svg';
+import Button2pActive from '/assets/button/2p_orange.svg';
+import Button4pActive from '/assets/button/4p_orange.svg';
 import BasicButton from '../../common/BasicButton';
 
 type Props = {

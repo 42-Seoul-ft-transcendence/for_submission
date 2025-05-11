@@ -5,17 +5,17 @@ import Header from '../../common/Header'
 import fetchWithAuth from '../../utils/fetchWithAuth'
 import joinRoom from './joinRoom'
 import RoomModal from './RoomModal'
-import JoinButton from '../../../assets/button/join_button.svg'
-import Button2pDefault from '../../../assets/button/2p_yellow.svg'
-import Button4pDefault from '../../../assets/button/4p_yellow.svg'
-import Button2pActive from '../../../assets/button/2p_orange.svg'
-import Button4pActive from '../../../assets/button/4p_orange.svg'
+import JoinButton from '/assets/button/join_button.svg'
+import Button2pDefault from '/assets/button/2p_yellow.svg'
+import Button4pDefault from '/assets/button/4p_yellow.svg'
+import Button2pActive from '/assets/button/2p_orange.svg'
+import Button4pActive from '/assets/button/4p_orange.svg'
 import { tournament } from '../../../types/Tournament'
 
 const RoomListPage = () => {
   const [rooms, setRooms] = useState<tournament[]>([])
   const [loading, setLoading] = useState(true)
-	const [isWating, setIsWating] = useState(false)
+	const [isWaiting, setIsWaiting] = useState(false)
 	const [pageNumber, setPageNumber] = useState<number>(0)
 	const [playerNumber, setPlayerNumber] = useState<number>(2)
 	const [totalPage, setTotalPage] = useState<number>(1)
@@ -30,9 +30,9 @@ const RoomListPage = () => {
 				navigate("/lobby", { replace: true })
 				return
 			}
-			else setIsWating(true)
+			else setIsWaiting(true)
 		}
-		else setIsWating(false)
+		else setIsWaiting(false)
 	}, [roomid, navigate])
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const RoomListPage = () => {
 			return
 		})
 		.finally(() => setLoading(false))
-  }, [pageNumber, playerNumber])
+  }, [pageNumber, playerNumber, isWaiting])
 
 	const handleChangeMode = (mode: number) => {
 		setPlayerNumber(mode)
@@ -82,7 +82,7 @@ const RoomListPage = () => {
 
   return (
 		<>
-			<BackGroundImage backgroundImageUrl='/src/assets/background/background_basic.png'>
+			<BackGroundImage backgroundImageUrl='/assets/background/background_basic.png'>
 				<Header />
 				<div className="flex flex-col gap-[2vh] top-0 items-center justify-left pt-24">
 					<div className="flex w-24 gap-[2vh] justify-center mt-4">
@@ -95,7 +95,7 @@ const RoomListPage = () => {
 							className={`${playerNumber == 4 ? "" : "cursor-pointer transition-transform hover:scale-105"}`}
 							onClick={() => handleChangeMode(4)} />
 					</div>
-					{isWating && <RoomModal isOpen={isWating} onClose={() => navigate("/rooms")} roomId={+roomid!} />}
+					{isWaiting && <RoomModal isOpen={isWaiting} onClose={() => navigate("/rooms")} roomId={+roomid!} />}
 					{ loading ? (<p>불러오는 중...</p>) : (
 						<ul className="space-y-2">
 							{rooms.map((room) => (

@@ -5,7 +5,7 @@ import Header from '../../common/Header.tsx';
 
 const LobbyPage = () => {
   return (
-    <BackGroundImage backgroundImageUrl="/src/assets/background/background_lobby.png">
+    <BackGroundImage backgroundImageUrl="/assets/background/background_lobby.png">
       <Header />
       <div className="flex gap-[15vh] mb-5">
         <CreateRoomButton />

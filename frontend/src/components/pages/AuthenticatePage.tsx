@@ -42,7 +42,7 @@ const AuthenticatePage = () => {
 
 	return (
 		<>
-			<BackGroundImage backgroundImageUrl='src/assets/background/background_main.png'>
+			<BackGroundImage backgroundImageUrl='/assets/background/background_main.png'>
 				<div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
 					{Array.from({ length }).map((_, i) => (
 						<input
@@ -93,17 +93,13 @@ const authenticate = (otpCode: string, navigate: ReturnType<typeof useNavigate>)
 		body: JSON.stringify({ userId, token: otpCode }),
 	})
 	.then((res) => {
-		if (!res.ok) throw new Error("HTTP 오류")
+		if (!res.ok) throw new Error()
 		return res.json()
 	})
 	.then((data) => {
-		if (data.success)
-		{
-			localStorage.setItem("accessToken", data.accessToken)
-			localStorage.setItem("refreshToken", data.refreshToken)
-			navigate("/lobby")
-		}
-		else throw new Error()
+		localStorage.setItem("accessToken", data.accessToken)
+		localStorage.setItem("refreshToken", data.refreshToken)
+		navigate("/lobby")
 	})
 	.catch(() => {
 		alert("OTP 인증 오류")

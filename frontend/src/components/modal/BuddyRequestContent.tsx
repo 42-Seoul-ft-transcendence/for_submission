@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import fetchWithAuth from '../utils/fetchWithAuth';
 import { useNavigate } from 'react-router-dom';
-import AcceptButton from '../../assets/button/accept_button.svg';
-import RejectButton from '../../assets/button/reject_button.svg';
+import AcceptButton from '/assets/button/accept_button.svg';
+import RejectButton from '/assets/button/reject_button.svg';
 import BasicModal from '../common/Modal';
 import BasicButton from '../common/BasicButton';
 import { FriendRequest, FriendRequestListResponse } from '../../types/BuddyRequest';

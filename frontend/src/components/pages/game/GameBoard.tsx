@@ -40,12 +40,12 @@ const GameBoard = ({ boardRef }: {boardRef: React.RefObject<wsGameInfo>}) => {
 		<div className="relative aspect-[144/53] w-[90vw] max-w-[1600px] h-auto left-1/2 transform -translate-x-1/2">
 			<img 
 				className="absolute top-0 left-0 w-full h-full object-cover z-0"
-				src="/src/assets/game/board.svg" />
+				src="/assets/game/board.svg" />
 				<div className="absolute inset-0 flex justify-center items-center">
 					<div className="relative w-[90%] aspect-[1440/530]">
 						<img
 							ref={ballRef}
-							src="/src/assets/game/ball.svg"
+							src="/assets/game/ball.svg"
 							className="absolute z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
 							alt="Ball"
 						/>
@@ -53,7 +53,7 @@ const GameBoard = ({ boardRef }: {boardRef: React.RefObject<wsGameInfo>}) => {
 						{/* 막대기 (예: 왼쪽) */}
 						<img
 							ref={leftPaddleRef}
-							src="/src/assets/game/bar.svg"
+							src="/assets/game/bar.svg"
 							className="absolute z-10 h-[20%] left-[0%] top-1/2"
 							alt="Left Paddle"
 						/>
@@ -61,7 +61,7 @@ const GameBoard = ({ boardRef }: {boardRef: React.RefObject<wsGameInfo>}) => {
 						{/* 막대기 (예: 오른쪽) */}
 						<img
 							ref={rightPaddleRef}
-							src="/src/assets/game/bar.svg"
+							src="/assets/game/bar.svg"
 							className="absolute z-10 h-[20%] right-[0%] top-1/2"
 							alt="Right Paddle"
 						/>

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import BackGroundImage from '../../common/BackGroundImage'
 import fetchWithAuth from '../../utils/fetchWithAuth'
 import Modal from '../../common/Modal'
-import BlackProfile from '../../../assets/black_profile.svg'
+import BlackProfile from '/assets/black_profile.svg'
 import { participant } from '../../../types/Tournament'
 
 type Props = {
@@ -73,7 +73,7 @@ const RoundTwoPage = () => {
 
 	return (
 		<>
-			<BackGroundImage backgroundImageUrl='/src/assets/background/background_basic.png'>
+			<BackGroundImage backgroundImageUrl='/assets/background/background_basic.png'>
 			<Modal isOpen={true} onClose={() => {}} backgroundClick={false} className="w-[600px] h-[350px]">
 				<div className="relative flex flex-col justify-center">
 					<h1 className="flex justify-center text-yellow-300 text-4xl mb-[10px]">Round&nbsp;2</h1>
@@ -93,7 +93,7 @@ const PlayerProfile = ({player1 = null, player2 = null}: Props) => {
 	return (
 		<div className="flex justify-center gap-[4vh]">
 			<div className="relative flex items-center justify-center flex-col">
-				<div className={`relative w-1/3 ${player1 ? cssOption : ""} overflow-hidden`}>
+				<div className={`relative w-24 h-24 ${player1 ? cssOption : ""} overflow-hidden`}>
 					<img
 						className="size-full"
 						src={BlackProfile} />
@@ -105,7 +105,7 @@ const PlayerProfile = ({player1 = null, player2 = null}: Props) => {
 			</div>
 			<p className="relative flex items-center justify-center text-2xl pb-3">VS</p>
 			<div className="relative flex items-center justify-center flex-col">
-				<div className={`relative w-1/3 ${player2 ? cssOption : ""} overflow-hidden`}>
+				<div className={`relative w-24 h-24 ${player2 ? cssOption : ""} overflow-hidden`}>
 					<img
 						className="size-full"
 						src={BlackProfile} />

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import fetchWithAuth from '../utils/fetchWithAuth';
 import { useNavigate } from 'react-router-dom';
 import { User, UserListResponse } from '../../types/User';
-import AddBuddyIcon from '../../assets/icon/AddBuddy.svg';
+import AddBuddyIcon from '/assets/icon/AddBuddy.svg';
 import BasicModal from '../common/Modal';
 import BasicButton from '../common/BasicButton';
 

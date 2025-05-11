@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import fetchWithAuth from '../utils/fetchWithAuth';
-import ProfilePlaceholder from '../../assets/black_profile.svg';
-import SettingIcon from '../../assets/icon/setting.svg';
+import ProfilePlaceholder from '/assets/black_profile.svg';
+import SettingIcon from '/assets/icon/setting.svg';
 import { MatchInfo, MatchesResponse, UserInfo } from '../../types/MyMatch';
 import { useNavigate } from 'react-router-dom';
 import EditProfileContent from './EditProfileContent';

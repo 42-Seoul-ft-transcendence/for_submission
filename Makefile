@@ -1,6 +1,6 @@
 IMAGE = frontend backend
 VOLUME = backend_vol
-HOST_VOL = backend/srcs
+HOST_VOL = backend/vol
 
 all: main
 

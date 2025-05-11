@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import fetchWithAuth from '../../utils/fetchWithAuth'
 import BasicButton from '../../common/BasicButton'
 import Modal from '../../common/Modal'
-import BlackProfile from '../../../assets/black_profile.svg'
+import BlackProfile from '/assets/black_profile.svg'
 import { participant } from '../../../types/Tournament'
 
 type ModalProps = {
@@ -57,8 +57,13 @@ function RoomModal({ isOpen, onClose, roomId }: ModalProps) {
 		} catch (error) {
 			if (error instanceof Error) {
 				alert(error.message)
-			}
-			handleExit()
+				if (error.message === "토너먼트를 찾을 수 없습니다.") {
+					setInRoom(false)
+					onClose()
+				} else
+					handleExit()
+			} else 
+				handleExit()
 		}
 	}
 
@@ -115,7 +120,7 @@ const PlayerProfile = ({ isReady, player1 = null, player2 = null }: Props) => {
 	return (
 		<div className="flex justify-center gap-[4vh]">
 			<div className="relative flex items-center justify-center flex-col">
-				<div className={`relative w-1/3 ${player1 ? cssOption : ""} overflow-hidden`}>
+				<div className={`relative w-12 h-12 ${player1 ? cssOption : ""} overflow-hidden`}>
 					<img
 						className="size-full"
 						src={BlackProfile} />
@@ -127,7 +132,7 @@ const PlayerProfile = ({ isReady, player1 = null, player2 = null }: Props) => {
 			</div>
 			{isReady && <p className="relative flex items-center justify-center text-2xl pb-3">VS</p>}
 			<div className="relative flex items-center justify-center flex-col">
-				<div className={`relative w-1/3 ${player2 ? cssOption : ""} overflow-hidden`}>
+				<div className={`relative w-12 h-12 ${player2 ? cssOption : ""} overflow-hidden`}>
 					<img
 						className="size-full"
 						src={BlackProfile} />

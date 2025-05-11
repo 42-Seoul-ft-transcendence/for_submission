@@ -1,13 +1,13 @@
-import BackGroundImage from '../common/BackGroundImage';
 import { useState, useEffect } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
 import { useNavigate } from 'react-router-dom';
+import BackGroundImage from '../common/BackGroundImage';
 import BasicButton from '../common/BasicButton';
+import fetchWithAuth from '../utils/fetchWithAuth';
 
 const RegisterPage = () => {
   return (
     <>
-      <BackGroundImage backgroundImageUrl="src/assets//background/background_2fa.png">
+      <BackGroundImage backgroundImageUrl="/assets/background/background_2fa.png">
         <OTPRegister />
       </BackGroundImage>
     </>
@@ -15,26 +15,23 @@ const RegisterPage = () => {
 };
 
 const OTPRegister = () => {
-  const [qrCodeUrl, setQrCodeUrl] = useState('https://naver.com');
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
   const navigate = useNavigate();
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
 
-    // fetch(`${import.meta.env.VITE_API_BASE}/ft/api/auth/2fa/setup`, {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ accessToken }),
-    // })
-    // .then((res) => res.json())
-    // .then((data) => {
-    //   localStorage.setItem("secret", data.secret)
-    //   setQrCodeUrl(data.qrCodeUrl)
-    // })
-    // .catch((err) => {
-    // 	console.error("OTP 등록 오류:", err)
-    // 	alert("OTP 등록 오류")
-    // 	navigate("/")
-    // });
+  useEffect(() => {
+     fetchWithAuth(`${import.meta.env.VITE_API_BASE}/ft/api/auth/2fa/setup`, navigate, {
+       method: "GET",
+     })
+     .then((res) => res.json())
+     .then((data) => {
+       localStorage.setItem("secret", data.secret)
+       setQrCodeUrl(data.qrCodeUrl)
+     })
+     .catch((err) => {
+     	console.error("OTP 등록 오류:", err)
+     	alert("OTP 등록 오류")
+     	navigate("/")
+     });
   }, []);
 
   const handleComplete = () => {
@@ -48,7 +45,7 @@ const OTPRegister = () => {
           Scan this QR code <br /> with the Microsoft Authenticator app
         </h2>
         {qrCodeUrl ? (
-          <QRCodeSVG value={qrCodeUrl} size={200} className="mb-10" />
+          <img src={qrCodeUrl} width="200" height="200" className="mb-10" />
         ) : (
           <p>QR 코드 로딩 중...</p>
         )}

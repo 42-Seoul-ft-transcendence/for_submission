@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import JoinRoom from '../../../assets/join_room.svg';
+import JoinRoom from '/assets/join_room.svg';
 
 const JoinRoomButton = () => {
   const navigate = useNavigate();

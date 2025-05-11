@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import CreateRoom from '../../../assets/create_room.svg';
+import CreateRoom from '/assets/create_room.svg';
 import CreateRoomModal from './CreateRoomModal';
 
 const CreateRoomButton = () => {
