@@ -22,7 +22,15 @@ const jwtMiddleware: FastifyPluginCallback = (fastify, _options, done) => {
 
     try {
       const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
-      request.user = { id: decoded.userId };
+      
+      const userId = decoded.userId;
+
+      request.user = { id: userId };
+
+      await fastify.prisma.user.update({
+        where: { id:userId },
+        data: { lastSeen: new Date() }
+      });
     } catch (err) {
       throw new GlobalException(GlobalErrorCode.AUTH_EXPIRED_TOKEN);
     }
