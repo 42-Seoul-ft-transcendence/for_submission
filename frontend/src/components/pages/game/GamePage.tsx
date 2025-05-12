@@ -177,7 +177,7 @@ const MatchResult = ({ match, isMulti, tournamentId }: Props) => {
 	}
 
 	const handleButton = () => {
-		if (!isMulti)
+		if (!isMulti || match?.round === 2 || !isWinner)
 			navigate("/lobby", {replace: true})
 		else 
 			navigate(`/round2/${tournamentId}`, {replace: true})
@@ -213,7 +213,7 @@ const MatchResult = ({ match, isMulti, tournamentId }: Props) => {
 					<p className="text-black text-center text-2xl">{match.players[1].name}</p>
 				</div>
 			</div>
-			<BasicButton onClick={handleButton}>{isMulti ? "Next" : "Back to Lobby"}</BasicButton>
+			<BasicButton onClick={handleButton}>{isMulti && match?.round === 1 && isWinner ? "Next" : "Back to Lobby"}</BasicButton>
 		</div>
 	)
 }
