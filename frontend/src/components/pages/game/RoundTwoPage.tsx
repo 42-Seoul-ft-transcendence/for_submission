@@ -62,6 +62,7 @@ const RoundTwoPage = () => {
 				alert(error.message)
 			}
 		}
+	}
 
 	useEffect(() => {
 		updateRoomInfo()
