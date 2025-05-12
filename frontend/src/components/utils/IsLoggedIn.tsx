@@ -1,5 +1,5 @@
 const IsLoggedIn = (): boolean => {
-	const accessToken: string | undefined = localStorage.getItem("accessToken")
+	const accessToken = localStorage.getItem("accessToken")
 	if (accessToken)
 		return true
 	else
