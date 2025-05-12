@@ -9,6 +9,11 @@ main:
 	docker-compose build
 	docker-compose up -d
 
+front:
+	docker compose rm -f frontend
+	docker compose build frontend
+	docker compose up -d frontend
+
 start:
 	docker-compose start
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SettingIcon from '/assets/icon/setting.svg';
 import BasicButton from '../common/BasicButton';
@@ -11,15 +11,39 @@ type EditProfileContentProps = {
 
 function EditProfileContent({ onSaveSuccess, initial2FAEnabled }: EditProfileContentProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null); // ✅ 추가
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [is2FAEnabled, setIs2FAEnabled] = useState(initial2FAEnabled);
   const [nickname, setNickname] = useState('');
+  const [currentUsername, setCurrentUsername] = useState(''); // ✅ 현재 닉네임 저장용
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // ✅ 현재 사용자 정보 불러오기
+    const fetchUserInfo = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE}/ft/api/users/me`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        });
+
+        if (!res.ok) throw new Error('사용자 정보 불러오기 실패');
+
+        const data = await res.json();
+        setNickname(data.name); // 입력 필드 초기값
+        setCurrentUsername(data.name); // 실제 현재값 저장
+      } catch (err) {
+        console.error('❌ 사용자 정보 가져오기 실패:', err);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith('image/')) {
-      setImageFile(file); // ✅ 파일 저장
+      setImageFile(file);
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -31,7 +55,6 @@ function EditProfileContent({ onSaveSuccess, initial2FAEnabled }: EditProfileCon
 
   const handle2FAToggle = async () => {
     if (is2FAEnabled) {
-      // ✅ 2FA 비활성화: API 호출
       try {
         const res = await fetchWithAuth(
           `${import.meta.env.VITE_API_BASE}/ft/api/auth/2fa`,
@@ -42,7 +65,7 @@ function EditProfileContent({ onSaveSuccess, initial2FAEnabled }: EditProfileCon
         if (!res.ok) throw new Error('2FA 비활성화 실패');
 
         alert('2FA has been disabled.');
-        setIs2FAEnabled(false); // 상태 갱신
+        setIs2FAEnabled(false);
       } catch (err) {
         console.error('❌ 2FA 비활성화 실패:', err);
         alert('Failed to disable 2FA');
@@ -54,28 +77,29 @@ function EditProfileContent({ onSaveSuccess, initial2FAEnabled }: EditProfileCon
 
   const handleSave = async () => {
     try {
-      // 닉네임 변경
+      // ✅ 닉네임이 비어 있으면 기존 값 사용
+      const nameToSave = nickname.trim() || currentUsername;
+
       const resName = await fetch(`${import.meta.env.VITE_API_BASE}/ft/api/users/me`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
-        body: JSON.stringify({ name: nickname }),
+        body: JSON.stringify({ name: nameToSave }),
       });
 
       if (!resName.ok) throw new Error('닉네임 변경 실패');
 
-      // 이미지 업로드
+      // ✅ 이미지 업로드
       if (imageFile) {
         const formData = new FormData();
-        formData.append('image', imageFile); // File 객체 그대로 전달
+        formData.append('image', imageFile);
 
         const resImage = await fetch(`${import.meta.env.VITE_API_BASE}/ft/api/users/me/image`, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            // Content-Type은 절대 설정하지 말 것! (자동으로 multipart/form-data + boundary가 붙음)
           },
           body: formData,
         });

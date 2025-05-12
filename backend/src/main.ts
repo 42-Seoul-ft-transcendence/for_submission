@@ -97,13 +97,13 @@ await fastify.register(cors, {
   origin: (origin, callback) => {
     const allowedOrigins = process.env.CORS_URL?.split(" ");
 
-    if (!origin || allowedOrigins?.includes(origin)) {
+    // if (!origin || allowedOrigins?.includes(origin)) {
       // 허용된 출처
       callback(null, true);
-    } else {
+    // } else {
       // 허용되지 않은 출처
-      callback(new Error('Not allowed by CORS'), false);
-    }
+      // callback(new Error('Not allowed by CORS'), false);
+    // }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // 허용할 HTTP 메서드
   credentials: true, // 쿠키 허용 여부
