@@ -6,7 +6,6 @@ import Placeholder from '/assets/black_profile.svg';
 import DeleteButton from '/assets/button/delete_button.svg';
 import DeleteModal from '../common/Modal';
 import Button from '../common/BasicButton';
-// import { mockBuddyList } from '../../mocks/buddies';
 import { useNavigate } from 'react-router-dom';
 import SideModal from './SideModal';
 import AddBuddyContent from '../modal/AddBuddyContent';
@@ -96,45 +95,52 @@ const BuddyContent = () => {
         {buddies.length === 0 ? (
           <div className="text-center text-white text-2xl mt-10">No buddies found.</div>
         ) : (
-          buddies.map((buddy) => (
-            <div
-              key={buddy.id}
-              className="flex items-center justify-between text-white bg-[#1f1f1f] px-4 py-2 rounded-lg"
-            >
-              <div className="flex items-center gap-4">
-                <img
-                  src={buddy.image || Placeholder}
-                  alt={buddy.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div className="flex flex-col">
-                  <span className="text-2xl font-semibold">{buddy.name}</span>
-                  <span
-                    className={`text-sm ${buddy.isOnline ? 'text-green-400' : 'text-gray-400'}`}
-                  >
-                    {buddy.isOnline
-                      ? 'Online'
-                      : `Offline · Last seen: ${new Date(buddy.lastSeen).toLocaleString('en-US', {
-                          weekday: 'short',
-                          year: 'numeric',
-                          month: 'short',
-                          day: '2-digit',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          hour12: true,
-                        })}`}
-                  </span>
-                </div>
-              </div>
+          buddies.map((buddy) => {
+            const lastSeenDate = new Date(buddy.lastSeen);
+            const now = new Date();
+            const diffMinutes = (now.getTime() - lastSeenDate.getTime()) / (1000 * 60);
+            const isOnline = diffMinutes <= 10;
 
-              <img
-                src={DeleteButton}
-                onClick={() => handleDeleteClick(buddy)}
-                className="w-16 h-16 cursor-pointer"
-                alt="Delete"
-              />
-            </div>
-          ))
+            return (
+              <div
+                key={buddy.id}
+                className="flex items-center justify-between text-white bg-[#1f1f1f] px-4 py-2 rounded-lg"
+              >
+                <div className="flex items-center gap-4">
+                  <img
+                    src={buddy.image || Placeholder}
+                    alt={buddy.name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-semibold">{buddy.name}</span>
+                    <span
+                      className={`text-sm ${isOnline ? 'text-green-400' : 'text-gray-400'}`}
+                    >
+                      {isOnline
+                        ? 'Online'
+                        : `Offline · Last seen: ${lastSeenDate.toLocaleString('en-US', {
+                            weekday: 'short',
+                            year: 'numeric',
+                            month: 'short',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true,
+                          })}`}
+                    </span>
+                  </div>
+                </div>
+
+                <img
+                  src={DeleteButton}
+                  onClick={() => handleDeleteClick(buddy)}
+                  className="w-16 h-16 cursor-pointer"
+                  alt="Delete"
+                />
+              </div>
+            );
+          })
         )}
       </div>
 
@@ -182,3 +188,4 @@ const BuddyContent = () => {
 };
 
 export default BuddyContent;
+
